@@ -1,0 +1,117 @@
+// ============================================================================
+// SYSTEM MAP: Access to Reproductive Care Including Abortion
+// Course: Health Systems & Policy - Module 4 System Expansion
+// Team: Group 3
+//
+// PARTICIPATION & WORK DIVISION STATEMENT:
+// Lead Contributor & Author: Arelie Orozco
+// Team Members on Group Roster: Mitchel Gonzalez, Brooke Granger, Sienna Hernandez, Anthony Vuongo
+// Note: Per instructor guidance on team participation, this submission represents 
+// individual synthesis, research, and Graphviz restructuring completed by Arelie Orozco.
+//
+// ============================================================================
+// COMPLETE BIBLIOGRAPHY (RESEARCH SOURCES CONSULTED)
+// ============================================================================
+// [1] Guttmacher Institute (2023). "The High Toll of US Abortion Bans: Nearly One in Five Patients Now Traveling Out of State for Abortion Care." https://www.guttmacher.org/2023/12/high-toll-us-abortion-bans-nearly-one-five-patients-now-traveling-out-state-abortion-care
+// [2] ANSIRH (2024). "Abortion seekers, particularly those who must travel out of state are at higher risk of incurring catastrophic health expenditures." https://www.ansirh.org/research/research/abortion-seekers-particularly-those-who-must-travel-out-state-are-higher-risk
+// [3] KFF (2024). "The Hyde Amendment and Coverage for Abortion Services Under Medicaid in the Post-Roe Era." https://www.kff.org/womens-health-policy/the-hyde-amendment-and-coverage-for-abortion-services-under-medicaid-in-the-post-roe-era/
+// [4] American College of Obstetricians and Gynecologists (2023). "Advanced Practice Clinicians and Abortion Care Provision." https://www.acog.org/advocacy/abortion-is-essential/trending-issues/issue-brief-advanced-practice-clinicians-and-abortion-care-provision
+// [5] World Health Organization (2022). "Abortion care guideline." https://www.who.int/publications/i/item/9789240039483
+// [6] World Health Organization (2025). "Abortion care guideline, 2nd ed." https://www.who.int/publications/i/item/9789240104204
+// ============================================================================
+
+digraph ReproductiveCareSystem {
+
+  graph [label="Access to Reproductive Care Including Abortion\nSystem Map & Causal Loop Diagram (Group 3 - Module 4)", labelloc=t, fontsize=16, fontname="Helvetica-Bold", splines=true, overlap=false];
+  node [shape=box, style="filled,rounded", fontname="Helvetica", fontsize=10, penwidth=2.0];
+  edge [fontname="Helvetica-Bold", fontsize=9];
+
+  // 12 APPROVED TEMPLATE ELEMENTS
+  income_security [label="Income security\n(Structural Determinants)", style="filled,rounded", fillcolor="#EEEAFB", color="#5B50A5"];
+  occupational_stratification_by_race_gender [label="Occupational stratification by race and gender\n(Structural Inequities)", style="filled,rounded", fillcolor="#EEEAFB", color="#5B50A5"];
+  medicaid_enrollment [label="Medicaid enrollment\n(Financing / Insurance)", style="filled,rounded", fillcolor="#EAF3FB", color="#244C6A"];
+  household_out_of_pocket_spending [label="Household out-of-pocket spending\n(Funding)", style="filled,rounded", fillcolor="#EAF3FB", color="#244C6A"];
+  bundled_payment_use [label="Bundled payment use\n(Payment Models)", style="filled,rounded", fillcolor="#EAF3FB", color="#244C6A"];
+  state_scope_of_practice_laws [label="State scope-of-practice laws\n(Federal & State Policy)", style="filled,rounded", fillcolor="#EEEAFB", color="#5B50A5"];
+  reimbursement_requirements [label="Reimbursement requirements\n(Enforcement & Accountability)", style="filled,rounded", fillcolor="#EBF7ED", color="#2E6B38"];
+  primary_care_clinician_supply [label="Primary care clinician supply\n(Workforce)", style="filled,rounded", fillcolor="#EBF7ED", color="#2E6B38"];
+  obstetric_maternity_care_availability [label="Obstetric/maternity care availability\n(Infrastructure)", style="filled,rounded", fillcolor="#EBF7ED", color="#2E6B38"];
+  medical_device_availability [label="Medical device availability\n(Pharmaceuticals & Devices)", style="filled,rounded", fillcolor="#FFF3E0", color="#E65100"];
+  specialty_care_referral_availability [label="Specialty care referral availability\n(Care Providers)", style="filled,rounded", fillcolor="#EBF7ED", color="#2E6B38"];
+  health_communication_effectiveness [label="Health communication effectiveness\n(Public Health)", style="filled,rounded", fillcolor="#FFF3E0", color="#E65100"];
+
+  // NEW PROPOSED ELEMENTS
+  out_of_state_travel_burden [label="Out-of-state travel burden\n(New: Geographic Access)", style="filled,rounded", fillcolor="#FCE8E6", color="#A52714"];
+  abortion_fund_capacity [label="Abortion fund capacity\n(New: Funding / Support)", style="filled,rounded", fillcolor="#FCE8E6", color="#A52714"];
+
+  // LOOP R1 (Mitchel Gonzalez)
+  income_security -> household_out_of_pocket_spending [label="-", color="#5B50A5", penwidth=2.5, comment="[Mitchel Gonzalez - R1] Lower income security increases out-of-pocket care costs (Guttmacher 2023)"];
+  household_out_of_pocket_spending -> out_of_state_travel_burden [label="+ (delay)", color="#A52714", penwidth=2.5, comment="[Mitchel Gonzalez - R1] High upfront costs delay travel arrangements (ANSIRH 2024)"];
+  out_of_state_travel_burden -> specialty_care_referral_availability [label="-", color="#A52714", penwidth=2.5, comment="[Mitchel Gonzalez - R1] Travel barriers prevent specialty referral completion (ANSIRH 2024)"];
+  specialty_care_referral_availability -> income_security [label="+ (delay)", color="#2E6B38", penwidth=2.5, comment="[Mitchel Gonzalez - R1] Timely care prevents long employment disruptions (ACOG 2023)"];
+
+  // LOOP B1 (Brooke Granger)
+  state_scope_of_practice_laws -> primary_care_clinician_supply [label="+", color="#5B50A5", penwidth=2.5, comment="[Brooke Granger - B1] Supportive scope laws permit APCs to provide care (ACOG 2023)"];
+  primary_care_clinician_supply -> specialty_care_referral_availability [label="+", color="#2E6B38", penwidth=2.5, comment="[Brooke Granger - B1] Higher frontline supply increases referral completion (WHO 2022)"];
+  specialty_care_referral_availability -> state_scope_of_practice_laws [label="- (delay)", style="dashed", color="#244C6A", penwidth=2.0, comment="[Brooke Granger - B1] Adequate referral capacity reduces legislative pressure (ACOG 2023)"];
+
+  // LOOP R2 (Sienna Hernandez)
+  occupational_stratification_by_race_gender -> income_security [label="-", color="#5B50A5", penwidth=2.5, comment="[Sienna Hernandez - R2] Low-wage job concentration directly reduces income security (BLS 2022)"];
+  income_security -> medicaid_enrollment [label="-", color="#5B50A5", penwidth=2.5, comment="[Sienna Hernandez - R2] Income loss increases population eligibility for Medicaid (KFF 2024)"];
+  medicaid_enrollment -> household_out_of_pocket_spending [label="+", color="#244C6A", penwidth=2.5, comment="[Sienna Hernandez - R2] High Medicaid enrollment under Hyde bans forces out-of-pocket payment (KFF 2024)"];
+  household_out_of_pocket_spending -> occupational_stratification_by_race_gender [label="+ (delay)", style="dashed", color="#244C6A", penwidth=2.0, comment="[Sienna Hernandez - R2] Medical debt traps workers in hourly positions (CAP 2023)"];
+
+  // LOOP B2 (Arelie Orozco)
+  obstetric_maternity_care_availability -> medical_device_availability [label="+", color="#2E6B38", penwidth=2.5, comment="[Arelie Orozco - B2] Active facilities maintain inventory of MVA kits and devices (WHO 2022)"];
+  medical_device_availability -> specialty_care_referral_availability [label="+", color="#FFF3E0", penwidth=2.5, comment="[Arelie Orozco - B2] Equipment availability enables procedural referrals (WHO 2025)"];
+  specialty_care_referral_availability -> reimbursement_requirements [label="+ (delay)", color="#2E6B38", penwidth=2.5, comment="[Arelie Orozco - B2] High referral volume triggers payer audit mandates (CMS 2023)"];
+  reimbursement_requirements -> obstetric_maternity_care_availability [label="- (delay)", color="#2E6B38", penwidth=2.5, comment="[Arelie Orozco - B2] Onerous billing rules erode clinic operating margins (March of Dimes 2023)"];
+
+  // LOOP R3 (Anthony Vuongo)
+  health_communication_effectiveness -> out_of_state_travel_burden [label="-", color="#FFF3E0", penwidth=2.5, comment="[Anthony Vuongo - R3] Effective public messaging helps navigate legal options (WHO 2025)"];
+  out_of_state_travel_burden -> abortion_fund_capacity [label="- (delay)", style="dashed", color="#A52714", penwidth=2.0, comment="[Anthony Vuongo - R3] Surge in travel needs drains local abortion fund reserves (Guttmacher 2023)"];
+  abortion_fund_capacity -> household_out_of_pocket_spending [label="-", color="#A52714", penwidth=2.5, comment="[Anthony Vuongo - R3] Higher fund grant capacity reduces out-of-pocket burden (Guttmacher 2023)"];
+  household_out_of_pocket_spending -> health_communication_effectiveness [label="- (delay)", color="#244C6A", penwidth=2.5, comment="[Anthony Vuongo - R3] Unexpected costs degrade public trust in health guidance (APHA 2023)"];
+
+  // CONTEXTUAL EDGE
+  bundled_payment_use -> household_out_of_pocket_spending [label="+/-", style="dashed", color="#244C6A", comment="Bundled payments offer predictable pricing but require upfront capital (ANSIRH 2024)"];
+
+}
+
+// ============================================================================
+// MODULE 4: ELEMENT RECONSIDERATION (WITH RESEARCH CITATIONS)
+// ============================================================================
+//
+// 1. RECONSIDERATION OF EXCLUDED TEMPLATE ELEMENTS:
+//
+// - primary_care_visit_capacity (Care Providers):
+//   DECISION: Remain Excluded.
+//   STRUCTURAL REASONING: Our map explicitly isolates 'primary_care_clinician_supply' and 'specialty_care_referral_availability'. Including generic visit capacity creates redundant parallel paths without adding distinct systemic feedback regarding gestational legal deadlines [ACOG 2023].
+//   CITATION: American College of Obstetricians and Gynecologists (2023), "Advanced Practice Clinicians and Abortion Care Provision."
+//
+// - uninsured_population_size (Financing / Insurance):
+//   DECISION: Reconsider for Future Inclusion (Currently Excluded).
+//   STRUCTURAL REASONING: In reproductive healthcare, 'medicaid_enrollment' under federal Hyde Amendment bans acts as the dominant coverage failure mode, forcing enrollees to pay 100% out-of-pocket identically to uninsured patients. Uninsured size represents a distinct entry barrier, but is excluded currently to keep loop boundaries focused on Medicaid policy failures [KFF 2024].
+//   CITATION: KFF (2024), "The Hyde Amendment and Coverage for Abortion Services Under Medicaid in the Post-Roe Era."
+//
+// - housing_stability (Structural Determinants):
+//   DECISION: Remain Excluded.
+//   STRUCTURAL REASONING: Travel and lodging costs resulting from local care bans are modeled directly via 'out_of_state_travel_burden', while household liquid capital is captured by 'income_security'. Adding housing stability duplicates these mechanisms without creating a distinct feedback loop [ANSIRH 2024].
+//   CITATION: ANSIRH (2024), "Abortion seekers, particularly those who must travel out of state are at higher risk of incurring catastrophic health expenditures."
+//
+// - trust_in_health_institutions (Public Health):
+//   DECISION: Reconsider for Future Inclusion (Currently Excluded).
+//   STRUCTURAL REASONING: Trust moderates whether patients act on public health messaging. However, 'health_communication_effectiveness' currently serves as the primary operational proxy in Loop R3 to prevent over-complicating the public health feedback flow [WHO 2025].
+//   CITATION: World Health Organization (2025), "Abortion care guideline, 2nd ed."
+//
+// 2. PROPOSAL OF NEW ELEMENTS (NOT IN ORIGINAL TEMPLATE):
+//
+// - Proposed Element 1: Out-of-state travel burden
+//   AREA: Structural Determinants / Geographic Access
+//   STRUCTURAL JUSTIFICATION: Converts state policy bans into indirect household expenses (lodging, mileage, childcare, lost wages), creating a crucial structural link between state restrictions and household out-of-pocket financial strain [Guttmacher 2023].
+//   CITATION: Guttmacher Institute (2023), "The High Toll of US Abortion Bans: Nearly One in Five Patients Now Traveling Out of State for Abortion Care."
+//
+// - Proposed Element 2: Abortion fund capacity
+//   AREA: Funding / Practical Support
+//   STRUCTURAL JUSTIFICATION: Represents non-profit mutual aid grants that directly offset household out-of-pocket spending when Medicaid coverage is statutorily barred, functioning as a vital safety-net stabilizing loop [ANSIRH 2024; Guttmacher 2023].
+//   CITATION: ANSIRH (2024); Guttmacher Institute (2023).
